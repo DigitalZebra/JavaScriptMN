@@ -1,0 +1,54 @@
+Notes:
+
+Cool libs:
+- deck.js  http://imakewebthings.github.com/deck.js/
+- waypoints.js, jquery waypoints  http://imakewebthings.github.com/jquery-waypoints
+
+
+
+SVG:
+- Inkscape for SVG editing
+- Raphael 
+- jQuery SVG
+
+
+Browser Support:
+basic feature set:
+ - IE 9+, FF 3+, Chrome 4+, Safari 3.2+, Opera 9+, iOS Safari 3.2+, Android Browser 3+
+ - VML in IE 5+
+ Source: caniuse.com
+
+ notes:
+ - SVG 1.0 in 2001, 101 in 2003 (1.1 is the most widely supported), IE 9 supports 1.1+
+ - IE has VML, vector markup language, a competing technology which was deprecated in IE9 in favor of SVG.
+ - SMIL animation, no IE support :(
+ - Can use SVG in CSS backgrounds or SVG in image elements in most recent browsers
+ - Retained mode... browser manages DOM/Scene Graph for you, editing an element causes the scene to be automatically re-rendered.
+ - vector graphics... performance degrades as more objects are drawn in SVG.  This is b/c additional references kept, additional state maintained, additional updates need to happen 
+ 
+
+Canvas:
+- jCanvasScript
+- Fabric.js
+- Paper.js
+- cakejs
+- doodle.js
+- gury.js
+- http://processingjs.org/
+
+Browser support:
+ - Chrome 4+, FF 2+, IE 9+, Opera 9+, Safari 3.1+, iOS Safari 3.2+, Android Browser 2.1+
+ Source: caniuse.com
+ 
+ notes:
+ - "un-retained" mode... browser "forgets" that you drew a square, you need to remember it.  Many of the libraries listed will give you a simple scene graph to use, aiding in managing the state of your application.
+ - very low level, bitmap, performance degrades as number of pixels shown increases.  Makes sense as more pixels = more time/memory.
+ - 
+
+ 
+ http://techblog.floorplanner.com/2011/03/15/canvas-vs-canvas-vs-svg-performance-on-ipad/
+ http://en.wikipedia.org/wiki/Retained_mode
+ http://en.wikipedia.org/wiki/Scene_graph
+ http://www.sitepoint.com/canvas-vs-svg-how-to-choose/
+ http://srufaculty.sru.edu/david.dailey/svg/
+ http://jsfiddle.net/L5BmS/
