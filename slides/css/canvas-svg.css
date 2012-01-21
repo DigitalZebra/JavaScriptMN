@@ -1,0 +1,59 @@
+
+.title-meta {
+	position: absolute;
+	bottom: 2em;
+	right: 2em;
+}
+
+
+
+.slide h2 {
+	font-size: 3.15em;
+}
+
+.deck-container .slide h3 {
+	font-size: 2.25em;
+	color: #444444;
+}
+
+.slide h4 {
+	font-size: 1.75em;
+}
+
+.deck-container .content-list li {
+	font-size: 1.6em;
+	margin-bottom: .5em;
+}
+
+span.super-em {
+	color: #EE0040;
+}
+
+/* .slide h1 { */
+/* 	font-size: 80px; */
+/* } */
+
+/* .slide h2 { */
+/* 	font-size: 62px;  */
+/* } */
+
+/* .slide h3 { */
+/* 	font-size: 42px; */
+/* } */
+
+/* .slide h4 { */
+/* 	font-size: 28px; */
+/* } */
+
+/* .deck-container ul.agenda { */
+/* 	font-size: 30px; */
+/* } */
+
+.deck-container p {
+	font-size: 1.3em;
+}
+
+.deck-container .slide .TODO {
+	color: red;
+}
+
