@@ -2,12 +2,25 @@
 <html>
 	<head>
 		<script src="js/jquery-1.7.1.min.js"></script>
+		<script src="js/doodle.min.js"></script>
 		
 		<script>
 			$(document).ready(function() {
-				var ctx = $("#canv").get(0).getContext("2d");
-				ctx.fillStyle = "#000000";
-				ctx.fillRect(0, 0, 400, 400);
+// 				var ctx = $("#canv").get(0).getContext("2d");
+// 				ctx.fillStyle = "#000000";
+// 				ctx.fillRect(0, 0, 400, 400);
+
+				var display = doodle.createDisplay("#canvContainer");
+				
+				var layer = display.createLayer();
+				
+				var i = doodle.createImage("img/spaceship.png");
+				i.height = 40;
+				i.width = 40;
+				i.x = 150;
+				i.y = 130;
+				
+				layer.addChild(i);
 			});
 		
 		
@@ -15,9 +28,12 @@
 	</head>
 	
 	<body>
-		  <canvas id="canv" style="width: 400px; height: 400px; position: absolute; top: 40px; left: 50px;"></canvas>
-		  <svg  xmlns="http://www.w3.org/2000/svg" version="1.1" style="position: absolute; top: 60px; left: 100px; width: 500px; height: 350px;">
+<!-- 		  <canvas id="canv" style="width: 400px; height: 400px; position: absolute; top: 40px; left: 50px;"></canvas> -->
+		  <svg  xmlns="http://www.w3.org/2000/svg" version="1.1" style="position: absolute; top: 60px; left: 100px; width: 500px; height: 350px; z-index: 4">
 		  	<circle id="circle2" cx="100" cy="100" r="50" fill="rgb(100, 100, 100)" fill-opacity=".5" />
 		  </svg>
+		  <div id="canvContainer" style="z-index: 1; width: 400px; height: 400px;">
+		  
+		  </div>
 	</body>
 </html>

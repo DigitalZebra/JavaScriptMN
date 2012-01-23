@@ -35,6 +35,7 @@ Canvas:
 - doodle.js
 - gury.js
 - http://processingjs.org/
+- three.js
 
 Browser support:
  - Chrome 4+, FF 2+, IE 9+, Opera 9+, Safari 3.1+, iOS Safari 3.2+, Android Browser 2.1+

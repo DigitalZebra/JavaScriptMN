@@ -7,17 +7,29 @@ var asteroidManager = function(gameX, gameY) {
 	                   {path: "img/asteroidMedBig.png", rad: 30},
 	                   {path: "img/asteroidHuge.png", rad: 50}];
 	
-	var asteroid = function(svg) {
-		var type = asteroidTypes[Math.floor(Math.random() * asteroidTypes.length)];
-		
-		this.domElement = $(svg.image(null, this.x, this.y, type.rad * 2, type.rad * 2, type.path, {transform: "translate(-20, -20)"})); // the transform puts location x and y in the middle of the asteroid.
+	
+	var calcMovementStep = function(elapsedMs, speed) {
+		return Math.ceil(elapsedMs / 1000 * speed);
 	};
 	
-	// dunno what should go in proto yet.
+	var asteroid = function(layer) {
+		this.type = asteroidTypes[Math.floor(Math.random() * asteroidTypes.length)];
+		
+		//this.domElement = $(svg.image(null, this.x, this.y, type.rad * 2, type.rad * 2, type.path, {transform: "translate(-20, -20)"})); // the transform puts location x and y in the middle of the asteroid.
+		var asteroidImage = doodle.createImage(this.type.path);
+		asteroidImage.x = this.x - this.type.rad;
+		asteroidImage.y = this.y - this.type.rad;
+		asteroidImage.width = asteroidImage.height = this.type.rad * 2;
+		this.asteroidElement = asteroidImage;
+		
+		layer.addChild(asteroidImage);
+		//this.domsvg.image(null, this.x, this.y, type.rad * 2, type.rad * 2, type.path, {transform: "translate(-20, -20)"})); // the transform puts location x and y in the middle of the asteroid.
+	};
+	
 	asteroid.prototype = {
-		calcNewPosition: function() {
-			this.x += this.xComp;
-			this.y += this.yComp;
+		calcNewPosition: function(elapsedMs) {
+			this.x += calcMovementStep(elapsedMs, this.xComp);
+			this.y += calcMovementStep(elapsedMs, this.yComp);
 		},
 		setVector: function (xComponent, yComponent) {
 			this.xComp = xComponent;
@@ -28,26 +40,21 @@ var asteroidManager = function(gameX, gameY) {
 			this.y = y;
 		},
 		draw: function() {
-			this.domElement.attr("x", this.x);
-			this.domElement.attr("y", this.y);
+			//this.domElement.attr("x", this.x);
+			//this.domElement.attr("y", this.y);
+			this.asteroidElement.x = this.x - this.type.rad;
+			this.asteroidElement.y = this.y - this.type.rad;
 		}
 	};
 	
 	
 	var me = this,
-		locationX = Math.ceil(gameX / 2), // put starship in middle.
-		locationY = Math.ceil(gameY * .9), // put starship in bottom 10th of space.
-		SPEED_Y = 4,
-		SPEED_X = 5,
-		spaceshipDomObj = null,
-		SHIP_OFFSET = 20, // for padding the ship, depends on size of ship graphic... also assumes graphic if square :)
-		Y_BOUNDRY = Math.ceil(gameY * .5) + SHIP_OFFSET - 1,
 		asteroids = [];
-	
+
 	var generateRandomVector = function(a) {
 		// X can be negative or positive in the range of -4 to 4 (may be a bug here)
 		// y can only be positive and must be greater than 1, range of 3 to 7
-		a.setVector(Math.ceil((Math.random() * 3 * 2) - 3), Math.ceil(((Math.random() + .001) / 1.001) * 5) + 2);
+		a.setVector(Math.ceil((Math.random() * 150 * 2) - 150), Math.ceil(((Math.random() + .001) / 1.001) * 150) + 70);
 	};
 	
 	// sets the asteroid at the starting point, also generating a random vector.
@@ -56,7 +63,7 @@ var asteroidManager = function(gameX, gameY) {
 		generateRandomVector(a); // generate a new vector
 	};
 	
-	me.init = function(svg) {
+	me.init = function(layer) {
 		var i = 0,
 			newAsteroid;
 		
@@ -65,7 +72,7 @@ var asteroidManager = function(gameX, gameY) {
 			
 			// pick a random start position and vector for all of them
 			// keep asteroid in X bounds, start at just outside viewable window.
-			newAsteroid = new asteroid(svg);
+			newAsteroid = new asteroid(layer);
 			resetAsteroid(newAsteroid); 
 			
 			
@@ -75,7 +82,7 @@ var asteroidManager = function(gameX, gameY) {
 
 	me.update = function(gameState) {
 		$.each(asteroids, function(index, value) {
-			value.calcNewPosition();
+			value.calcNewPosition(gameState.elapsedTime);
 			
 			// need a buffer for the graphic, else user sees asteroid being reset and disappearing.
 			if (value.x > gameX + 50 || value.x < -50 || value.y > gameY + 50) {

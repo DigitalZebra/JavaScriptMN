@@ -3,15 +3,18 @@
 		<script src="js/jquery-1.7.1.min.js"></script>
 		<script src="js/jquery.svg.js"></script>
 		<script src="js/jquery.svgdom.js"></script>
+<!-- 		<script src="js/doodle-debug.js"></script> -->
+		<script src="js/doodle.min.js"></script>
 		<script src="js/game.js"></script>
 		<script src="js/spaceship.js"></script>
 		<script src="js/asteroid.js"></script>
+		<script src="js/gameWindow.js"></script>
 		
 		
 		
 		<script>
 			$(document).ready(function() {
-				var g = new game("svgContainer");
+				var g = new game("container");
 
 // 				g.init();
 // 				g.doStuff();
@@ -24,7 +27,7 @@
 	</head>
 	
 	<body>
-		<div id="svgContainer">
+		<div id="container">
 <!-- 			<svg xmlns="http://www.w3.org/2000/svg" version="1.1" style="width: 500px; height: 500px; background:blue;" id="sss"> -->
 <!-- 				<circle id="circle2" cx="100" cy="100" r="50" fill="rgb(100, 100, 100)" /> -->
 <!-- 			</svg> -->
