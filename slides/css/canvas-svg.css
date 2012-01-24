@@ -29,6 +29,28 @@ span.super-em {
 	color: #EE0040;
 }
 
+.slide > ul > li {
+	font-size: 1.6em;
+}
+
+.slide ul.agenda > li {
+	font-size: 2.6em;
+}
+
+.slide > dl > dt {
+	font-size: 1.8em;
+	font-weight: bold;
+	margin-top: .8em;
+}
+
+.slide > dl > dd {
+	font-size: 1.5em;
+}
+
+.slide > dl > dd {
+	margin-left: 2em;
+}
+
 /* .slide h1 { */
 /* 	font-size: 80px; */
 /* } */
