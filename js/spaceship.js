@@ -13,11 +13,16 @@ var spaceship = function(gameX, gameY) {
 		Y_BOUNDRY = Math.ceil(gameY * .5) + SHIP_OFFSET - 1,
 		boundingBox = null;
 	
+	
+	asCircleCollidableObject.call(this);
+	
 	var calcMovementStep = function(elapsedMs, speed) {
 		return Math.ceil(elapsedMs / 1000 * speed);
 	};
 	
 	me.init = function(canvasLayer) {
+		
+		this.radius = SHIP_OFFSET;
 		
 		spaceshipCanvasObj = doodle.createImage("img/spaceship.png");
 		spaceshipCanvasObj.height = SHIP_OFFSET * 2;
@@ -25,14 +30,15 @@ var spaceship = function(gameX, gameY) {
 		spaceshipCanvasObj.x = locationX - 20;
 		spaceshipCanvasObj.y = locationY - 20;
 		
-		boundingBox = doodle.createSprite();
-		
-		boundingBox.graphics.lineStyle(3, "#ff0000", 1);
-		boundingBox.graphics.circle(0, 0, SHIP_OFFSET);
-		boundingBox.graphics.stroke();
+		// bounding box drawing code
+//		boundingBox = doodle.createSprite();
+//		
+//		boundingBox.graphics.lineStyle(3, "#ff0000", 1);
+//		boundingBox.graphics.circle(0, 0, SHIP_OFFSET);
+//		boundingBox.graphics.stroke();
 		
 		//spaceshipCanvasObj.transform = doodle.geom.createMatrix(1, 0, 0, 1, 0,0).translate(-20, -20);
-		canvasLayer.addChild(boundingBox);
+		//canvasLayer.addChild(boundingBox);
 		canvasLayer.addChild(spaceshipCanvasObj);
 		//spaceshipDomObj = svg.image(null, locationX, locationY, SHIP_OFFSET * 2, SHIP_OFFSET * 2, "img/spaceship.png", {transform: "translate(-"+ SHIP_OFFSET + ",-"+ SHIP_OFFSET + ")"}); // the transform puts location x and y in the middle of the ship graphic.
 		//spaceshipDomObj = $(spaceshipDomObj);
@@ -58,14 +64,17 @@ var spaceship = function(gameX, gameY) {
 		else if (locationX < SHIP_OFFSET) { locationX = SHIP_OFFSET; }
 		if (locationY < Y_BOUNDRY) { locationY = Y_BOUNDRY + 1; }
 		else if (locationY > gameY - SHIP_OFFSET) { locationY = gameY - SHIP_OFFSET; }
+		
+		this.locationX = locationX;
+		this.locationY = locationY;
 	};
 	
 	
 	me.draw = function(state) {
 		spaceshipCanvasObj.x = locationX - 20;
 		spaceshipCanvasObj.y = locationY - 20;
-		boundingBox.x = locationX;
-		boundingBox.y = locationY;
+//		boundingBox.x = locationX;
+//		boundingBox.y = locationY;
 		//spaceshipDomObj.attr("x", locationX);
 		//spaceshipDomObj.attr("y", locationY);
 	};

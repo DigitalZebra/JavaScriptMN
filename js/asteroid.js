@@ -2,10 +2,17 @@
 
 var asteroidManager = function(gameX, gameY) {
 	
-	var asteroidTypes = [{path: "img/asteroidSmall.png", rad: 10},
-	                   {path: "img/asteroidMed.png", rad: 20},
-	                   {path: "img/asteroidMedBig.png", rad: 30},
-	                   {path: "img/asteroidHuge.png", rad: 50}];
+	var asteroidTypes = [{path: "img/asteroidSmall.png", rad: 10, size: "small"},
+	                   {path: "img/asteroidMed.png", rad: 20, size: "med"},
+	                   {path: "img/asteroidMedBig.png", rad: 30, size: "big"},
+	                   {path: "img/asteroidHuge.png", rad: 50, size: "huge"}];
+	
+	var ASTEROID_Y_COMPONENT = 90,
+		ASTEROID_Y_COMPONENT_STEP = 5,
+		ASTEROID_Y_COMPONENT_MAX = 360,
+		NUM_ASTEROIDS = 16;
+	
+	                   
 	
 	
 	var calcMovementStep = function(elapsedMs, speed) {
@@ -13,7 +20,12 @@ var asteroidManager = function(gameX, gameY) {
 	};
 	
 	var asteroid = function(layer) {
+		
+		asCircleCollidableObject.call(this);
+		
 		this.type = asteroidTypes[Math.floor(Math.random() * asteroidTypes.length)];
+		
+		this.radius = this.type.rad;
 		
 		//this.domElement = $(svg.image(null, this.x, this.y, type.rad * 2, type.rad * 2, type.path, {transform: "translate(-20, -20)"})); // the transform puts location x and y in the middle of the asteroid.
 		var asteroidImage = doodle.createImage(this.type.path);
@@ -28,22 +40,20 @@ var asteroidManager = function(gameX, gameY) {
 	
 	asteroid.prototype = {
 		calcNewPosition: function(elapsedMs) {
-			this.x += calcMovementStep(elapsedMs, this.xComp);
-			this.y += calcMovementStep(elapsedMs, this.yComp);
+			this.locationX += calcMovementStep(elapsedMs, this.xComp);
+			this.locationY += calcMovementStep(elapsedMs, this.yComp);
 		},
 		setVector: function (xComponent, yComponent) {
 			this.xComp = xComponent;
 			this.yComp = yComponent;
 		},
 		setPosition: function (x, y) {
-			this.x = x;
-			this.y = y;
+			this.locationX = x;
+			this.locationY = y;
 		},
 		draw: function() {
-			//this.domElement.attr("x", this.x);
-			//this.domElement.attr("y", this.y);
-			this.asteroidElement.x = this.x - this.type.rad;
-			this.asteroidElement.y = this.y - this.type.rad;
+			this.asteroidElement.x = this.locationX - this.type.rad;
+			this.asteroidElement.y = this.locationY - this.type.rad;
 		}
 	};
 	
@@ -54,11 +64,12 @@ var asteroidManager = function(gameX, gameY) {
 	var generateRandomVector = function(a) {
 		// X can be negative or positive in the range of -4 to 4 (may be a bug here)
 		// y can only be positive and must be greater than 1, range of 3 to 7
-		a.setVector(Math.ceil((Math.random() * 150 * 2) - 150), Math.ceil(((Math.random() + .001) / 1.001) * 150) + 70);
+		a.setVector(Math.ceil((Math.random() * 150 * 2) - 150), Math.ceil(((Math.random() + .001) / 1.001) * 150) + ASTEROID_Y_COMPONENT);
 	};
 	
 	// sets the asteroid at the starting point, also generating a random vector.
 	var resetAsteroid = function(a) {
+		// keep asteroid in X bounds, start at just outside viewable window.
 		a.setPosition(Math.ceil((Math.random() * (gameX - 40)) + 20), -50);
 		generateRandomVector(a); // generate a new vector
 	};
@@ -68,14 +79,10 @@ var asteroidManager = function(gameX, gameY) {
 			newAsteroid;
 		
 		// select number of asteroids, 
-		for (i = 0; i < 12; i++) {
-			
+		for (i = 0; i < NUM_ASTEROIDS; i++) {
 			// pick a random start position and vector for all of them
-			// keep asteroid in X bounds, start at just outside viewable window.
 			newAsteroid = new asteroid(layer);
 			resetAsteroid(newAsteroid); 
-			
-			
 			asteroids.push(newAsteroid);
 		}
 	};
@@ -84,9 +91,18 @@ var asteroidManager = function(gameX, gameY) {
 		$.each(asteroids, function(index, value) {
 			value.calcNewPosition(gameState.elapsedTime);
 			
-			// need a buffer for the graphic, else user sees asteroid being reset and disappearing.
-			if (value.x > gameX + 50 || value.x < -50 || value.y > gameY + 50) {
+			// need a little bit of extra room for the graphic at edges, else user sees asteroid being reset and disappearing.
+			if (value.locationX > gameX + 50 || value.locationX < -50 || value.locationY > gameY + 50) {
 				resetAsteroid(value);
+				// Every time we reset an asteroid, speed them up!!!
+				if (ASTEROID_Y_COMPONENT < ASTEROID_Y_COMPONENT_MAX) {
+					ASTEROID_Y_COMPONENT += ASTEROID_Y_COMPONENT_STEP;	
+				}
+				
+				// decrease the acceleration amount every time we reset... this falls down pretty fast actually, not the best but w/e
+				if (Math.floor(ASTEROID_Y_COMPONENT) % 100 === 0 && ASTEROID_Y_COMPONENT_STEP > 2) {
+					ASTEROID_Y_COMPONENT_STEP--;
+				}
 			}
 		});
 	};
@@ -96,6 +112,22 @@ var asteroidManager = function(gameX, gameY) {
 		$.each(asteroids, function(index, value) {
 			value.draw();
 		});
+	};
+	
+	/**
+	 * 
+	 */
+	me.checkCollisions = function(visitor) {
+		var collisions = [];
+		
+		$.each(asteroids, function(index, value){ 
+			if (value.checkCollision(visitor)) {
+				resetAsteroid(value);
+				collisions.push(value.type.size);
+			}
+		});
+		
+		return collisions;	
 	};
 	
 	return me;

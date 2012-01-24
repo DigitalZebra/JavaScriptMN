@@ -1,10 +1,17 @@
 ﻿game = function(containerId) {
 	
 	var me = this,
-		gameSizeX = 800,
-		gameSizeY = 700,
+		gameSizeX = 700,
+		gameSizeY = 600,
 		privates = {},
-		canvasDisplay;
+		canvasDisplay,
+		
+		ASTEROID_SIZE_TO_SHIELD_DMG = {
+			huge: 19,
+			big: 11,
+			med: 8,
+			small: 5
+		};
 	
 	// private method.  pauses the game.
 	privates.pauseMe = function() {
@@ -25,7 +32,8 @@
 				spaceshipObj: null,
 				cId: containerId,
 				asteroidManager: null,
-				gameWindow: null
+				gameWindow: null,
+				remainingShield: 100
 			},
 			
 			init: function() {
@@ -33,6 +41,9 @@
 				this.spaceshipObj = new spaceship(gameSizeX, gameSizeY);
 				this.asteroidManager = new asteroidManager(gameSizeX, gameSizeY);
 				this.gameWindow = new gameWindow(gameSizeX, gameSizeY);
+				
+				// init the shield
+				this.gameWindow.setShield(this.remainingShield);
 				
 				var spaceShipClosure = this.spaceshipObj,
 					asteroidManagerClosure = this.asteroidManager,
@@ -88,12 +99,32 @@
 			update: function(state) {
 				this.spaceshipObj.update(state);
 				this.asteroidManager.update(state);
+				this.gameWindow.update(state);
+				
+				var collisions = this.asteroidManager.checkCollisions(this.spaceshipObj.createCollisionVisitor()),
+					clos = this;
+				
+				if (collisions.length > 0) {
+					
+					$.each(collisions, function(index, value) {
+						clos.remainingShield = clos.remainingShield - ASTEROID_SIZE_TO_SHIELD_DMG[value];
+					});
+					
+					if (this.remainingShield <= 0) {
+						alert("Game over!");
+						privates.pauseMe();
+					}
+					else {
+						this.gameWindow.setShield(this.remainingShield);
+					}
+				}
 			},
 			
 			// draw!
 			draw: function(state) {
 				this.spaceshipObj.draw(state);
 				this.asteroidManager.draw(state);
+				this.gameWindow.draw(state);
 			}
 		});
 
