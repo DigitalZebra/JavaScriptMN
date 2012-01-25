@@ -53,6 +53,27 @@
 </section>
 
 <section class="slide">
+	<h2>Agenda</h2>
+	<ul class="agenda">
+		<li class="highlighted">
+			Introduction
+		</li>
+		<li>
+			Overview
+		</li>
+		<li>
+			Canvas
+		</li>
+		<li>
+			SVG
+		</li>
+		<li>
+			Questions?
+		</li>
+	</ul>
+</section>
+
+<section class="slide">
 	<h2>Introduction</h2>
 	<h4>Andrew Gerber</h4>
 	<ul>
@@ -65,10 +86,31 @@
 
 <section class="slide">
 	<h2>Introduction</h2>
-	<p>At Thomson, responsibilities include:</p>
+	<p>At Thomson, my responsibilities include:</p>
 	<center>
 		<img src="img/blinkKitty.jpg" width="748px" height="500px" />
 	</center>
+</section>
+
+<section class="slide">
+	<h2>Agenda</h2>
+	<ul class="agenda">
+		<li >
+			Introduction
+		</li>
+		<li class="highlighted">
+			Overview
+		</li>
+		<li>
+			Canvas
+		</li>
+		<li>
+			SVG
+		</li>
+		<li>
+			Questions?
+		</li>
+	</ul>
 </section>
 
 <section class="slide">
@@ -77,18 +119,55 @@
 	
 	<dl>
 		<dt>Canvas</dt>
-		<dd>Relatively new HTML tag part of HTML 5 specification</dd>
+		<dd>
+			<ul>
+				<li>New HTML tag part of HTML 5 specification</li>
+				<li>Provides low level raster based graphics API</li>
+			</ul>
+		</dd>
 		<dt>SVG</dt>
 		<dd>
 			<ul> 
 				<li><strong>S</strong>calable <strong>V</strong>ector <strong>G</strong>raphics</li>
+				<li>XML file format which defines vector graphics</li>
+				<li>&lt;SVG&gt; tag can be embedded in HTML and rendered by browsers</li>
 			</ul>
 		</dd>
 	</dl>
+
+</section>
+
+<section class="slide">
+	<h2>Overview</h2>
+	<h4>Why Canvas and SVG?</h4>
 	<ul>
-		<li>No Flash on mobile devices!</li>
-		<li>What about Android?<br />
+		<li>No Flash in the browser on mobile devices!</li>
+		<li class="slide">What about Android?<br />
 			Adobe halting Flash on mobile devices in the browser: <a href="http://blogs.adobe.com/conversations/2011/11/flash-focus.html">http://blogs.adobe.com/conversations/2011/11/flash-focus.html</a>
+		</li>
+		<li class="slide">Microsoft has FINALLY (as of IE9) embraced SVG and HTML5!!!
+			<br /> Lots of other good stuff coming up in IE10: Web workers, web sockets, history, SVG filter effects, etc!</li> 
+	</ul>
+	<marquee class="slide" scrollamount="9" loop="100">Web developers finally have a replacement for the marquee and <blink>&lt;blink&gt;</blink> tags!!</marquee>
+</section>
+
+<section class="slide">
+	<h2>Agenda</h2>
+	<ul class="agenda">
+		<li >
+			Introduction
+		</li>
+		<li>
+			Overview
+		</li>
+		<li class="highlighted">
+			Canvas
+		</li>
+		<li>
+			SVG
+		</li>
+		<li>
+			Questions?
 		</li>
 	</ul>
 </section>
@@ -100,15 +179,139 @@
 		<li>Introduced by Apple in Webkit circa 2004</li>
 		<li>Part of the HTML 5 working draft</li>
 		<li>Supported by the following major browsers:<br />
-			<strong>Chrome 4+, FF 2+, IE 9+, Opera 9+, Safari 3.1+, <span class="super-em">iOS Safari 3.2+</span>,<span class="super-em"> Android Browser 2.1+</span></strong>
+			<strong>Chrome 4+, FF 2+, IE 9+, Opera 9+, Safari 3.1+, <span class="super-em">iOS Safari 3.2+</span>,<span class="super-em"> Android Browser 2.1+</span>, <span class="super-em"> Opera Mobile 10.0+</span></strong>
 		</li>
+		<li>Looks like: &lt;canvas&gt;&#8230;&lt;/canvas&gt;</li>
 	</ul>
 </section>
 
 <section class="slide">
 	<h2>Canvas</h2>
+	<ul>
+		<li>Provides a low level raster based drawing API, meaning that you can manipulate the screen on a pixel by pixel basis.</li>
+		<li>Does NOT provide a scene graph.  The canvas element has no memory of what was rendered previously, you have to track state yourself.</li>
+		<li>Provides methods for rendering images, gradients, and shadows, along with geometric primitives.</li>
+	</ul>
+</section>
+
+<section class="slide">
+	<h2>Canvas</h2>
+	<p>The &lt;canvas&gt; element provides a <strong>getContext(string)</strong> method which fetches the drawing context to be used.
+	<br />This allows the browser to support multiple drawing APIs or specifications.</p>
+	<p>Currently, two specifications exist:</p>
+	<dl>
+		<dt>2d</dt>
+		<dd>
+		The W3C standard and most widely supported context  <br />Provides a 2-D drawing API
+		<pre>var context = canvasDomElement.getContext("2d");</pre>
+		</dd>
+		
+		<dt>WebGL</dt>
+		<dd>Experimental, only supported in WebKit and FireFox<br />Provides a 3-D draw API which mimics the OpenGL ES API
+			<pre>var context = canvasDomElement.getContext("webgl");</pre>
+		</dd>
+	</dl> 
+</section>
+
+<section class="slide">
+	<h2>Canvas</h2>
+	<h4>Code Sample!</h4>
+	<pre>
+		&lt;body&gt;
+			&lt;canvas id="myCanvas" width="500" height="500"&gt;&lt;/canvas&gt;
+			&lt;script&gt;
+			var can = document.getElementById('myCanvas');
+			var ctx = can.getContext('2d');
+		
+			ctx.fillStyle = "#006600";
+			ctx.beginPath();
+			ctx.arc(200, 200, 50, 0, Math.PI * 2); // draw circle
+			ctx.fill();
+			&lt;/script&gt;
+		&lt;/body&gt;
+	</pre>
+</section>
+
+<section class="slide">
+	<h2>Canvas</h2>
+	<h4>Code Sample!</h4>
+	<p>This draws the transparent Wikipedia logo on the canvas. 
+	<pre>
+		&lt;body&gt;
+			&lt;canvas id="myCanvas" width="500" height="500"&gt;&lt;/canvas&gt;
+			&lt;script&gt;
+			var can = document.getElementById('myCanvas');
+			var ctx = can.getContext('2d');
+		
+			var imageObj = new Image();
+		
+  			function drawPattern() {
+				ctx.drawImage(imageObj, 0, 0);
+  			}
+  			
+  			imageObj.onload = drawPattern;
+  			imageObj.src = "http://upload.wikimedia.org/wikipedia/en/b/bc/Wiki.png";
+			&lt;/script&gt;
+		&lt;/body&gt;
+	</pre>
+</section>
+
+
+<section class="slide">
+	<h2>Libraries</h2>
+	<ul>
+		<li>Processing.js</li>
+		<li>Doodle.js</a></li>
+	</ul>
+</section>
+
+<section class="slide">
+	<h2>Canvas</h2>
+	<h4>Demo!</h4>
+	<a href="http://digitalzebra.net/javascriptmngame">http://digitalzebra.net/javascriptmngame</a>
+</section>
+
+<section class="slide">
+	<h2>Resources</h2>
+	<ul>
+		<li>Mozilla Developer Network tutorial - <a href="https://developer.mozilla.org/en/Canvas_tutorial">https://developer.mozilla.org/en/Canvas_tutorial</a></li>
+		<li>2d context spec - <a href="http://dev.w3.org/html5/2dcontext/">http://dev.w3.org/html5/2dcontext/</a></li>
+		<li>WebGL context spec - <a href="http://www.khronos.org/registry/webgl/specs/latest/">http://www.khronos.org/registry/webgl/specs/latest/</a></li>
+	</ul>
+</section>
+
+<section class="slide">
+	<h2>Canvas</h2>
+	<h4>Demo!</h4>
+</section>
+
+
+<section class="slide">
+	<h2>Agenda</h2>
+	<ul class="agenda">
+		<li >
+			Introduction
+		</li>
+		<li>
+			Overview
+		</li>
+		<li>
+			Canvas
+		</li>
+		<li class="highlighted">
+			SVG
+		</li>
+		<li>
+			Questions?
+		</li>
+	</ul>
+</section>
+
+<section class="slide">
+	<h2>SVG (Scalable Vector Graphics)</h2>
+	<h4>Quick facts:</h4>
 	<ul class="content-list">
-		<li>Raster based</li>
+		<li>Born out of </li>
 		<li>Part of the HTML 5 working draft</li>
 		<li>Supported by the following major browsers:<br />
 			<strong>Chrome 4+, FF 2+, IE 9+, Opera 9+, Safari 3.1+, <span class="super-em">iOS Safari 3.2+</span>,<span class="super-em"> Android Browser 2.1+</span></strong>
@@ -117,14 +320,11 @@
 </section>
 
 <section class="slide">
-	<h2>Canvas</h2>
-	<h4>Code Sample!</h4>
-
-</section>
-
-<section class="slide">
-	<h2>Canvas</h2>
-	<h4>Demo!</h4>
+	<h2>References</h2>
+	<ul class="content-list">
+		<li><a href="http://www.wikipedia.org">Wikipedia</a></li>
+		<li><a href="http://caniuse.com">CanIUse</a></li>
+	</ul>
 </section>
 	
 <!-- Other extension HTML snippets go here, at the bottom of the deck container. -->

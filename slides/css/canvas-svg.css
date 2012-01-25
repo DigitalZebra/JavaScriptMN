@@ -9,6 +9,7 @@
 
 .slide h2 {
 	font-size: 3.15em;
+	margin: 0 0 .3em 0;
 }
 
 .deck-container .slide h3 {
@@ -45,10 +46,19 @@ span.super-em {
 
 .slide > dl > dd {
 	font-size: 1.5em;
+	margin-left: 2em;
 }
 
-.slide > dl > dd {
-	margin-left: 2em;
+.slide > dl > dd > pre {
+	font-size: .66666em;
+}
+
+marquee {
+	font-size: 1.8em;
+}
+
+li.highlighted {
+	color: #559999;
 }
 
 /* .slide h1 { */
