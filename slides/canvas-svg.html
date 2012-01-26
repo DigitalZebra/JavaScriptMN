@@ -77,10 +77,10 @@
 	<h2>Introduction</h2>
 	<h4>Andrew Gerber</h4>
 	<ul>
-		<li>Twitter: <a href="http://twitter.com/digitalzebra">@DigitalZebra</a></li>
-		<li>Website: <a href="http://digitalzebra.net">DigitalZebra.net</a></li>
-		<li>GitHub: <a href="http://github.com/DigitalZebra/">DigitalZebra.net</a></li>
-		<li>Programmer for <a href="http://thomsonreuters.com">Thomson Reuters</a> (aka West, aka Thomson West)</li>
+		<li>Twitter: <a href="http://twitter.com/digitalzebra" target="_blank">@DigitalZebra</a></li>
+		<li>Website: <a href="http://digitalzebra.net" target="_blank">DigitalZebra.net</a></li>
+		<li>GitHub: <a href="http://github.com/DigitalZebra/" target="_blank">github.com/DigitalZebra/</a></li>
+		<li>Programmer for <a href="http://thomsonreuters.com" target="_blank">Thomson Reuters</a> (aka West, aka Thomson West)</li>
 	</ul>
 </section>
 
@@ -177,7 +177,7 @@
 	<h4>Quick facts:</h4>
 	<ul class="content-list">
 		<li>Introduced by Apple in Webkit circa 2004</li>
-		<li>Part of the HTML 5 working draft</li>
+		<li>New element part of the HTML5 working draft</li>
 		<li>Supported by the following major browsers:<br />
 			<strong>Chrome 4+, FF 2+, IE 9+, Opera 9+, Safari 3.1+, <span class="super-em">iOS Safari 3.2+</span>,<span class="super-em"> Android Browser 2.1+</span>, <span class="super-em"> Opera Mobile 10.0+</span></strong>
 		</li>
@@ -262,8 +262,10 @@
 	<h2>Canvas</h2>
 	<h4>Canvas Demos</h4>
 	<ul>
+		<li><a href="http://www.kevs3d.co.uk/dev/asteroids/">Asteroids</a></li>
 		<li><a href="http://www.giuseppesicari.it/progetti/javascript-3d-model-viewer/">3-D models rendered on a 2-D context</a></li>
 		<li><a href="http://hakim.se/experiments/html5/blob/03/">Blob!</a></li>
+		<li><a href="http://ie.microsoft.com/testdrive/Performance/FishBowl/">Microsoft Fishbowl</a></li>
 		<li><a href="http://digitalzebra.net/javascriptmngame">http://digitalzebra.net/javascriptmngame</a></li>
 	</ul>
 </section>
@@ -285,22 +287,30 @@
 <section class="slide">
 	<h2>Canvas</h2>
 	<h4>jCanvasScript Example</h4>
+	Before:
 	<pre>
-	&lt;body&gt;
-		&lt;script type="text/javascript" src="jCanvaScript.js"&gt;&lt;/script&gt;
-		&lt;canvas id="myCanvas" width="500" height="500"&gt;&lt;/canvas&gt;
+		&lt;script&gt;
+		var can = document.getElementById('myCanvas');
+		var ctx = can.getContext('2d');
+		ctx.fillStyle = "#006600";
+		ctx.beginPath();
+		ctx.arc(200, 200, 50, 0, Math.PI * 2); // draw circle
+		ctx.fill();
+		&lt;/script&gt;
+	</pre>
+	After:
+	<pre>
 		&lt;script&gt;
 		jc.start('myCanvas');
 		jc.circle(200,200,50,'#006600',1);
 		jc.start('myCanvas');
 		&lt;/script&gt;
-	&lt;/body&gt;
-	
 	</pre>
 </section>
 
 <section class="slide">
-	<h2>Resources</h2>
+	<h2>Canvas</h2>
+	<h4>Resources</h4>
 	<ul>
 		<li>Mozilla Developer Network tutorial - <a href="https://developer.mozilla.org/en/Canvas_tutorial">https://developer.mozilla.org/en/Canvas_tutorial</a></li>
 		<li>2d context spec - <a href="http://dev.w3.org/html5/2dcontext/">http://dev.w3.org/html5/2dcontext/</a></li>
@@ -334,10 +344,137 @@
 	<h2>SVG (Scalable Vector Graphics)</h2>
 	<h4>Quick facts:</h4>
 	<ul class="content-list">
-		<li>Born out of </li>
-		<li>Part of the HTML 5 working draft</li>
-		<li>Supported by the following major browsers:<br />
-			<strong>Chrome 4+, FF 2+, IE 9+, Opera 9+, Safari 3.1+, <span class="super-em">iOS Safari 3.2+</span>,<span class="super-em"> Android Browser 2.1+</span></strong>
+		<li>Born out of Microsoft's VML and Adobe's PGML</li>
+		<li>Open standard since 1999</li>
+		<li>Supported by the following major browsers (inline HTML):<br />
+			<strong>Chrome 7+, FF 4+, IE 9+, Opera 9+, Safari 5.1+, <span class="super-em">iOS Safari 5+</span>,<span class="super-em"> Android Browser 3.0+</span></strong>
+		</li>
+		<li>Supported by the following major browsers (embed or object elements):<br />
+			<strong>Chrome 4+, FF 3+, IE 9+, Opera 9+, Safari 3.2+, <span class="super-em">iOS Safari 3.2+</span>,<span class="super-em"> Android Browser 3.0+</span>, <span class="super-em">Opera Mobile and Opera Mini</span></strong>
+		</li>
+	</ul>
+</section>
+
+
+<section class="slide">
+	<h2>SVG</h2>
+	<ul>
+		<li>XML file format...
+			<ul>
+				<li>Everything, including animations, are defined in XML</li>
+				<li>XML can be compressed easily, making for small files (.svgz)</li>
+				<li>Many images can be defined with SVG with less memory than a similar raster format (.png or .jpg)</li>
+			</ul>
+		</li>
+		<li>In the browser: Retained mode rendering, similar to HTML
+			<ul>
+				<li>The browser "remembers" every node rendered, and builds a scene graph from XML</li>
+				<li>Every SVG node can be selected and its attributes altered, just like HTML</li>
+				<li>Transforms and other attributes apply to children elements</li>
+			</ul>
+		</li>
+	</ul>
+</section>
+
+<section class="slide">
+	<h2>SVG</h2>
+	<h4>Code sample!</h4>
+	<pre>
+	&lt;svg xmlns="http://www.w3.org/2000/svg" width="500px" height="500px"&gt;
+		&lt;circle cx="60" cy="60" r="40" fill="#006633" /&gt;
+	&lt;/svg&gt;
+	</pre>
+</section>
+
+
+<section class="slide">
+	<h2>SVG</h2>
+	<h4>Code sample!</h4>
+	<pre>
+&lt;svg xmlns="http://www.w3.org/2000/svg" width="600px" height="200px"&gt;
+  &lt;g&gt;
+    &lt;circle cx="60" cy="60" r="40" fill="#006633" stroke-width="3" stroke="#00FF00" /&gt;
+    &lt;animateTransform attributeName="transform" type="scale" from="1" to="3" begin="0s" dur="5s" fill="freeze" /&gt;
+  &lt;/g&gt;
+&lt;/svg&gt;
+	</pre>
+	<svg xmlns="http://www.w3.org/2000/svg" width="600px" height="200px">
+		<g>
+			<circle cx="40" cy="40" r="20" fill="#006633" stroke-width="3" stroke="#00FF00" />
+			<animateTransform attributeName="transform" type="scale" from="1" to="3" begin="0s" dur="5s" fill="freeze" />
+		</g>
+	</svg>
+</section>
+
+
+
+<section class="slide">
+	<h2>SVG</h2>
+	<h4>Libraries</h4>
+	<ul>
+		<li>Rapha&#235;l<br />
+			&nbsp;&nbsp;&nbsp;- Works with older versions of IE by falling back to IE supported VML
+		</li>
+		<li>
+			jQuery SVG<br />
+			&nbsp;&nbsp;&nbsp;- A jQuery plugin which extends jQuery functionality to SVG nodes.  Contains many further extensions which can be used based on need.
+		</li>
+	</ul>
+</section>
+
+
+<section class="slide">
+	<h2>SVG</h2>
+	<h4>Demos</h4>
+	<ul>
+		<li><a href="http://ie.microsoft.com/testdrive/Graphics/RealWorldDataAndDiagrams/Default.xhtml" target="_blank">IE TestDrive: Real world diagrams</a></li>
+		<li><a href="http://raphaeljs.com/australia.html">Map of Australia</a></li>
+		<li><a href="http://raphaeljs.com/github/impact.html">Cool chart</a></li>
+		<li><a href="http://raphaeljs.com/scape/">3-D game</a></li>
+	</ul>
+</section>
+
+
+<section class="slide">
+	<h2>How to Choose?</h2>
+	<h4>SVG Strengths</h4>
+	<ul>
+		<li>Content is searchable and can easily be made accessible</li>
+		<li>High detailed printing or viewing of content</li>
+		<li>Highly interactive content (think charts and graphs)<br />
+			&nbsp;&nbsp;&nbsp;- Browsers provide hitbox checking for you and fire appropriate events</li>
+		<li>Plain old CSS can be used to manipulate content</li>
+	</ul>
+</section>
+
+<section class="slide">
+	<h2>How to Choose?</h2>
+	<h4>Canvas Strengths</h4>
+	<ul>
+		<li>High volume drawing</li>
+		<li>Real time displaying of data</li>
+		<li>3-D (WebGL)</li>
+		<li>Games</li>
+	</ul>
+</section>
+
+<section class="slide">
+	<h2>Agenda</h2>
+	<ul class="agenda">
+		<li >
+			Introduction
+		</li>
+		<li>
+			Overview
+		</li>
+		<li>
+			Canvas
+		</li>
+		<li>
+			SVG
+		</li>
+		<li class="highlighted">
+			Questions?
 		</li>
 	</ul>
 </section>
@@ -347,6 +484,7 @@
 	<ul class="content-list">
 		<li><a href="http://www.wikipedia.org">Wikipedia</a></li>
 		<li><a href="http://caniuse.com">CanIUse</a></li>
+		<li><a href="http://html5center.sourceforge.net/How-to-Choose-Between-Canvas-and-SVG-for-your-Site">How to Choose Between Canvas and SVG</a></li>
 	</ul>
 </section>
 	
