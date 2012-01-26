@@ -190,6 +190,8 @@
 	<ul>
 		<li>Provides a low level raster based drawing API, meaning that you can manipulate the screen on a pixel by pixel basis.</li>
 		<li>Does NOT provide a scene graph.  The canvas element has no memory of what was rendered previously, you have to track state yourself.</li>
+		<li>All user interaction has to be implemented by the programmer<br />
+		&nbsp;&nbsp;&nbsp;- No <strong>onclick</strong> or <strong>onmouseover</strong>!  You have to implement these yourself</li>
 		<li>Provides methods for rendering images, gradients, and shadows, along with geometric primitives.</li>
 	</ul>
 </section>
@@ -256,19 +258,45 @@
 	</pre>
 </section>
 
-
 <section class="slide">
-	<h2>Libraries</h2>
+	<h2>Canvas</h2>
+	<h4>Canvas Demos</h4>
 	<ul>
-		<li>Processing.js</li>
-		<li>Doodle.js</a></li>
+		<li><a href="http://www.giuseppesicari.it/progetti/javascript-3d-model-viewer/">3-D models rendered on a 2-D context</a></li>
+		<li><a href="http://hakim.se/experiments/html5/blob/03/">Blob!</a></li>
+		<li><a href="http://digitalzebra.net/javascriptmngame">http://digitalzebra.net/javascriptmngame</a></li>
 	</ul>
 </section>
 
 <section class="slide">
 	<h2>Canvas</h2>
-	<h4>Demo!</h4>
-	<a href="http://digitalzebra.net/javascriptmngame">http://digitalzebra.net/javascriptmngame</a>
+	<h4>Libraries</h4>
+	<ul>
+		<li><strong>Processing.js</strong><br />
+			&nbsp;&nbsp;&nbsp; - A data visualization library which translates code from the Processing language into JavaScript (think CoffeeScript)</li>
+		<li><strong>Doodle.js</strong><br />
+			&nbsp;&nbsp;&nbsp; - Mimics ActionScript, provides a scene graph, good examples demonstrating the math behind many animations</li>
+		<li><strong>jCanvasScript</strong><br />
+			&nbsp;&nbsp;&nbsp;- Clean API, detailed documentation with examples<br />
+			</li>
+	</ul>
+</section>
+
+<section class="slide">
+	<h2>Canvas</h2>
+	<h4>jCanvasScript Example</h4>
+	<pre>
+	&lt;body&gt;
+		&lt;script type="text/javascript" src="jCanvaScript.js"&gt;&lt;/script&gt;
+		&lt;canvas id="myCanvas" width="500" height="500"&gt;&lt;/canvas&gt;
+		&lt;script&gt;
+		jc.start('myCanvas');
+		jc.circle(200,200,50,'#006600',1);
+		jc.start('myCanvas');
+		&lt;/script&gt;
+	&lt;/body&gt;
+	
+	</pre>
 </section>
 
 <section class="slide">
@@ -277,14 +305,9 @@
 		<li>Mozilla Developer Network tutorial - <a href="https://developer.mozilla.org/en/Canvas_tutorial">https://developer.mozilla.org/en/Canvas_tutorial</a></li>
 		<li>2d context spec - <a href="http://dev.w3.org/html5/2dcontext/">http://dev.w3.org/html5/2dcontext/</a></li>
 		<li>WebGL context spec - <a href="http://www.khronos.org/registry/webgl/specs/latest/">http://www.khronos.org/registry/webgl/specs/latest/</a></li>
+		<li>Deep dive presentation of Canvas - <a href="http://channel9.msdn.com/Events/MIX/MIX11/HTM03">http://channel9.msdn.com/Events/MIX/MIX11/HTM03</a></li>
 	</ul>
 </section>
-
-<section class="slide">
-	<h2>Canvas</h2>
-	<h4>Demo!</h4>
-</section>
-
 
 <section class="slide">
 	<h2>Agenda</h2>

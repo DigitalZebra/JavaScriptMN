@@ -2,10 +2,10 @@
 
 var asteroidManager = function(gameX, gameY) {
 	
-	var asteroidTypes = [{path: "img/asteroidSmall.png", rad: 10, size: "small"},
-	                   {path: "img/asteroidMed.png", rad: 20, size: "med"},
-	                   {path: "img/asteroidMedBig.png", rad: 30, size: "big"},
-	                   {path: "img/asteroidHuge.png", rad: 50, size: "huge"}];
+	var asteroidTypes = [{path: "img/asteroidNewSmall.png", rad: 15, size: "small"},
+	                   {path: "img/asteroidNewMed.png", rad: 20, size: "med"},
+	                   {path: "img/asteroidNewBig.png", rad: 30, size: "big"},
+	                   {path: "img/asteroidNewHuge.png", rad: 40, size: "huge"}];
 	
 	var ASTEROID_Y_COMPONENT = 90,
 		ASTEROID_Y_COMPONENT_STEP = 5,
